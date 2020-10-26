@@ -2,11 +2,11 @@ import React from 'react'
 import { IContact } from '../MockAPI/store';
 import { Contact } from './Contact';
 
-interface ContactsProps {
+interface ContactsListProps {
 	contacts: IContact[]
 }
 
-export function Contacts (props: ContactsProps) {
+export function ContactsList (props: ContactsListProps) {
 	return (
 		<div className="contacts">
 			{

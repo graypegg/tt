@@ -12,23 +12,23 @@ export interface ContactEndpoint {
 }
 
 export const ContactHandlers = [
-	rest.get('contact', (req, res, ctx) => {
+	rest.get('/contact', (req, res, ctx) => {
 		const result = STORE.contacts
-		res(
+		return res(
 			ctx.status(200),
 			ctx.json(result)
 		)
 	}),
-	rest.post<ContactEndpoint['POST contact']['body']>('contact', (req, res, ctx) => {
+	rest.post<ContactEndpoint['POST contact']['body']>('/contact', (req, res, ctx) => {
 		if (isContact(req.body)) {
 			STORE.contacts = STORE.contacts.concat([req.body])
 			const result = STORE.contacts
-			res(
+			return res(
 				ctx.status(200),
 				ctx.json(result)
 			)
 		}
-		res(
+		return res(
 			ctx.status(400)
 		)
 	})
