@@ -1,5 +1,5 @@
-import { rest } from 'msw';
-import { IContact, isContact, STORE } from './store';
+import { rest } from 'msw'
+import { IContact, isContact, STORE } from './store'
 
 export interface ContactEndpoint {
 	'GET contact': {

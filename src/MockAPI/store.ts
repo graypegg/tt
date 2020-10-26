@@ -8,15 +8,14 @@ export interface IContact {
 	address: string
 	tel: string
 	email: string
-	avatar: string
 }
 
 export function isContact(value: Object): value is IContact {
-	return ['name', 'job', 'address', 'tel', 'email', 'avatar'].every(key => key in value)
+	return ['name', 'job', 'address', 'tel', 'email'].every(key => key in value)
 }
 
 console.log(isContact)
 
 export const STORE: IContactsStore = {
-	contacts: [ {name: 'd', job: 'q', address: '', tel: 'f', email: 'dsf', avatar: ''} ]
+	contacts: [ {name: 'Tim Whatever', job: 'Developer', address: '456-123 Rue St. Road', tel: '2899391065', email: 'asdf@kjh.com'} ]
 }
