@@ -1,13 +1,13 @@
 import { rest } from 'msw';
-import { Contact, isContact, STORE } from './store';
+import { IContact, isContact, STORE } from './store';
 
 export interface ContactEndpoint {
 	'GET contact': {
-		response: Contact[]
+		response: IContact[]
 	}
 	'POST contact': {
-		body: Contact,
-		response: Contact[]
+		body: IContact,
+		response: IContact[]
 	}
 }
 

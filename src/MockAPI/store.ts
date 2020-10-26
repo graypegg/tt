@@ -1,8 +1,8 @@
-export interface ContactsStore {
-	contacts: Contact[]
+export interface IContactsStore {
+	contacts: IContact[]
 }
 
-export interface Contact {
+export interface IContact {
 	name: string
 	job: string
 	address: string
@@ -11,11 +11,11 @@ export interface Contact {
 	avatar: string
 }
 
-export function isContact(value: Object): value is Contact {
+export function isContact(value: Object): value is IContact {
 	const keys = Object.keys(value)
 	return ('name' in keys) && ('job' in keys) && ('address' in keys) && ('tel' in keys) && ('email' in keys) && ('avatar' in keys)
 }
 
-export const STORE: ContactsStore = {
-	contacts: []
+export const STORE: IContactsStore = {
+	contacts: [ {name: 'd', job: 'q', address: '', tel: 'f', email: 'dsf', avatar: ''} ]
 }
