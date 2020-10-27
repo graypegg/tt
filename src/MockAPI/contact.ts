@@ -21,7 +21,7 @@ export const ContactHandlers = [
 	}),
 	rest.post<ContactEndpoint['POST contact']['body']>('/contact', (req, res, ctx) => {
 		if (isContact(req.body)) {
-			STORE.contacts = STORE.contacts.concat([{...req.body, id: ++STORE.lastId}])
+			STORE.contacts = STORE.contacts.concat([{...req.body, id: (++STORE.lastId).toString()}])
 			const result = STORE.contacts
 			return res(
 				ctx.status(200),

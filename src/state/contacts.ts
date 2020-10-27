@@ -1,6 +1,6 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '.';
-import { IContact, isContact } from '../MockAPI/store';
+import { IContact, IContactInput, isContact } from '../MockAPI/store';
 
 export const hydrateContacts = createAsyncThunk(
 	'contact/hydrate',
@@ -13,7 +13,26 @@ export const hydrateContacts = createAsyncThunk(
 	}
 )
 
-export const contactsAdapter = createEntityAdapter<IContact>({
+export const addContact = createAsyncThunk(
+	'contact/add',
+	async (newContact: IContactInput) => {
+		const response = await fetch(`contact`, {
+			method: 'post',
+			body: JSON.stringify(
+				newContact
+			),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then(res => res.json())
+		if (response instanceof Array && response.every(isContact)) {
+			return response
+		}
+		return []
+	}
+)
+
+const contactsAdapter = createEntityAdapter<IContact>({
 	selectId: (contact) => contact.id,
 	sortComparer: (a, b) => a.name.localeCompare(b.name),
 })
@@ -26,5 +45,8 @@ export const contactsSlice = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(hydrateContacts.fulfilled, contactsAdapter.setAll)
+		builder.addCase(addContact.pending, (state, action) => contactsAdapter.addOne(state, {...action.meta.arg, id: action.meta.requestId }))
+		builder.addCase(addContact.fulfilled, contactsAdapter.setAll)
+		builder.addCase(addContact.rejected, (state, action) => contactsAdapter.removeOne(state, action.meta.requestId))
 	}
 })

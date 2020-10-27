@@ -10,7 +10,7 @@ export function ContactsList (props: ContactsListProps) {
 	return (
 		<div className="contacts">
 			{
-				props.contacts.map(contact => <Contact contact={contact} />)
+				props.contacts.map(contact => <Contact key={contact.id} contact={contact} />)
 			}
 		</div>
 	)

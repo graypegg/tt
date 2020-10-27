@@ -12,14 +12,15 @@ export interface IContactInput {
 }
 
 export interface IContact extends IContactInput {
-	id: number
+	id: string
 }
 
-export function isContact(value: Object): value is IContact {
+export function isContact(value: any): value is IContact {
+	if (typeof value !== 'object') return false
 	return ['name', 'job', 'address', 'tel', 'email'].every(key => key in value)
 }
 
 export const STORE: IContactsStore = {
-	contacts: [ {id: 1, name: 'Tim Whatever', job: 'Developer', address: '456-123 Rue St. Road', tel: '2899391065', email: 'asdf@kjh.com'} ],
+	contacts: [ {id: '1', name: 'Tim Whatever', job: 'Developer', address: '456-123 Rue St. Road', tel: '2899391065', email: 'asdf@kjh.com'} ],
 	lastId: 1
 }
