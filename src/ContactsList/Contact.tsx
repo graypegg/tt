@@ -14,7 +14,6 @@ export function Contact (props: ContactProps) {
 				<Link to={`/${props.contact.id}`}>See More ▶</Link>
 			</h3>
 			<strong>{props.contact.job || 'Unemployed'}</strong>
-
 		</div>
 	)
 }
