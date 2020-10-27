@@ -7,7 +7,11 @@ export interface ContactEndpoint {
 	}
 	'POST contact': {
 		body: IContactInput,
-		response: IContact[]
+		response: IContact
+	}
+	'PUT contact': {
+		body: IContactInput,
+		response: IContact
 	}
 }
 
@@ -21,11 +25,24 @@ export const ContactHandlers = [
 	}),
 	rest.post<ContactEndpoint['POST contact']['body']>('/contact', (req, res, ctx) => {
 		if (isContact(req.body)) {
-			STORE.contacts = STORE.contacts.concat([{...req.body, id: (++STORE.lastId).toString()}])
-			const result = STORE.contacts
+			const newContact = { ...req.body, id: (++STORE.lastId).toString() }
+			STORE.contacts = STORE.contacts.concat([newContact])
 			return res(
 				ctx.status(200),
-				ctx.json(result)
+				ctx.json(newContact)
+			)
+		}
+		return res(
+			ctx.status(400)
+		)
+	}),
+	rest.put<ContactEndpoint['PUT contact']['body']>('/contact/:id', (req, res, ctx) => {
+		if (isContact(req.body) && req.params['id']) {
+			const newContact = { ...req.body, id: req.params['id'] }
+			STORE.contacts = STORE.contacts.filter(contact => contact.id !== req.params['id']).concat([newContact])
+			return res(
+				ctx.status(200),
+				ctx.json(newContact)
 			)
 		}
 		return res(
