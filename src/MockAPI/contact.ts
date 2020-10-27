@@ -13,6 +13,9 @@ export interface ContactEndpoint {
 		body: IContactInput,
 		response: IContact
 	}
+	'DELETE contact': {
+		response: IContact
+	}
 }
 
 export const ContactHandlers = [
@@ -43,6 +46,18 @@ export const ContactHandlers = [
 			return res(
 				ctx.status(200),
 				ctx.json(newContact)
+			)
+		}
+		return res(
+			ctx.status(400)
+		)
+	}),
+	rest.delete<ContactEndpoint['PUT contact']['body']>('/contact/:id', (req, res, ctx) => {
+		if (req.params['id']) {
+			STORE.contacts = STORE.contacts.filter(contact => contact.id !== req.params['id'])
+			return res(
+				ctx.status(200),
+				ctx.json({})
 			)
 		}
 		return res(

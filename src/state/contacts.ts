@@ -31,6 +31,15 @@ export const addContact = createAsyncThunk(
 	}
 )
 
+export const deleteContact = createAsyncThunk(
+	'contact/delete',
+	async (id: string, thunkAPI) => {
+		return fetch(`contact/${id}`, {
+			method: 'delete'
+		}).then(res => res.json())
+	}
+)
+
 export const updateContact = createAsyncThunk<
 	IContact | undefined,
 	Update<IContactInput>,
@@ -80,5 +89,8 @@ export const contactsSlice = createSlice({
 		// Update Contact
 		builder.addCase(updateContact.pending, (state, action) => contactsAdapter.updateOne(state, action.meta.arg))
 		builder.addCase(updateContact.rejected, (state, action) => contactsAdapter.removeOne(state, action.meta.arg.id))
+
+		// Delete Contact
+		builder.addCase(deleteContact.pending, (state, action) => contactsAdapter.removeOne(state, action.meta.arg))
 	}
 })
