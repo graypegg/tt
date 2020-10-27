@@ -5,12 +5,16 @@ import App from './App/App';
 import reportWebVitals from './reportWebVitals';
 
 import { worker } from './MockAPI'
+import { Provider } from 'react-redux';
+import { store } from './state';
 
 (async function () {
   await worker.start()
   ReactDOM.render(
     <React.StrictMode>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </React.StrictMode>,
     document.getElementById('root')
   );
