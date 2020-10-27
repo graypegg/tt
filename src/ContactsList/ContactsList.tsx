@@ -1,7 +1,7 @@
 import React from 'react'
 import { IContact } from '../MockAPI/store';
 import { Contact } from './Contact';
-import { NewContactForm } from './NewContactForm/NewContactForm';
+import { NewContactForm } from './NewContactForm';
 
 interface ContactsListProps {
 	contacts: IContact[]

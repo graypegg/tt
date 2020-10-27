@@ -1,18 +1,24 @@
 import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useHistory, useParams } from 'react-router-dom'
 import { ContactForm } from '../ContactForm/ContactForm'
 import { IContactInput, isContact } from '../MockAPI/store'
 import { useTypedSelector } from '../state'
-import { addContact, updateContact } from '../state/contacts'
+import { deleteContact, updateContact } from '../state/contacts'
 
 export function Contact () {
 	const dispatch = useDispatch()
+	const history = useHistory()
 	const { id } = useParams<{ id: string }>()
 	const contact = useTypedSelector(state => state.contacts.entities[id])
 
-	const saveContact = useCallback((changes: IContactInput) => {
+	const onUpdateContact = useCallback((changes: IContactInput) => {
 		dispatch(updateContact({ id, changes }))
+	}, [dispatch, id])
+
+	const onDeleteContact = useCallback(() => {
+		dispatch(deleteContact(id))
+		history.push('/')
 	}, [dispatch, id])
 
 	if (isContact(contact)) {
@@ -33,7 +39,8 @@ export function Contact () {
 					<dd><a href={`mailto:${contact.email}`}>{contact.email}</a></dd>
 				</dl>
 
-				<ContactForm legend="Update Contact" onSubmit={saveContact} contact={contact}></ContactForm>
+				<button onClick={onDeleteContact}>Delete</button>
+				<ContactForm legend="Update Contact" onSubmit={onUpdateContact} contact={contact}></ContactForm>
 			</div>
 		)
 	}
