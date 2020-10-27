@@ -5,6 +5,8 @@ import { Contact } from './Contact';
 import { Contacts } from './Contacts'
 import { hydrateContacts } from '../state/contacts';
 
+import './App.css'
+
 function App() {
 	const dispatch = useDispatch()
 
@@ -13,7 +15,7 @@ function App() {
 	}, [dispatch])
 
 	return (
-		<div className="App">
+		<div className="app">
 			<Router>
 				<Switch>
 					<Route path="/" exact>

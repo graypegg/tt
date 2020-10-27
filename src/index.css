@@ -7,7 +7,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+a {
+	color: rgb(165, 51, 51);
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgb(122, 17, 17);
 }

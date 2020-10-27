@@ -10,7 +10,10 @@ export function Contacts () {
 
 	if (contacts instanceof Array && contacts.every(isContact)) {
 		return (
-			<ContactsList contacts={contacts}></ContactsList>
+			<div className="contact">
+				<h1>Contacts</h1>
+				<ContactsList contacts={contacts}></ContactsList>
+			</div>
 		)
 	}
 

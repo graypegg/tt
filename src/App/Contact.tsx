@@ -6,6 +6,8 @@ import { IContactInput, isContact } from '../MockAPI/store'
 import { useTypedSelector } from '../state'
 import { deleteContact, updateContact } from '../state/contacts'
 
+import './Contact.css'
+
 export function Contact () {
 	const dispatch = useDispatch()
 	const history = useHistory()
@@ -24,22 +26,23 @@ export function Contact () {
 	if (isContact(contact)) {
 		return (
 			<div className="contact">
+				<h1>Contact</h1>
 				<Link to="/">◀ Back</Link>
 				<h3>{contact.name || 'Unnamed'}</h3>
 				<strong>{contact.job || 'Unemployed'}</strong>
 
-				<dl>
-					<dt>Address</dt>
-					<dd>{contact.address}</dd>
+				<dl className="contact__information">
+					<dt className="contact__information__title">Address</dt>
+					<dd className="contact__information__data">{contact.address}</dd>
 
-					<dt>Phone</dt>
-					<dd><a href={`tel:${contact.tel}`}>{contact.tel}</a></dd>
+					<dt className="contact__information__title">Phone</dt>
+					<dd className="contact__information__data"><a href={`tel:${contact.tel}`}>{contact.tel}</a></dd>
 
-					<dt>Email</dt>
-					<dd><a href={`mailto:${contact.email}`}>{contact.email}</a></dd>
+					<dt className="contact__information__title">Email</dt>
+					<dd className="contact__information__data"><a href={`mailto:${contact.email}`}>{contact.email}</a></dd>
 				</dl>
 
-				<button onClick={onDeleteContact}>Delete</button>
+				<button className="contact__delete" onClick={onDeleteContact}>Delete Permanently</button>
 				<ContactForm legend="Update Contact" onSubmit={onUpdateContact} contact={contact}></ContactForm>
 			</div>
 		)

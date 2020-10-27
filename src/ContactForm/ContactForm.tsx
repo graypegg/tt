@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from 'react'
 import { IContact, IContactInput } from '../MockAPI/store';
 
+import './ContactForm.css'
+
 interface ContactFormProps {
 	legend: string
 	onSubmit: (contact: IContactInput) => void
@@ -25,26 +27,26 @@ export function ContactForm(props: ContactFormProps) {
 	}, [props.onSubmit, newName, newJob, newAddress, newTel, newEmail])
 
 	return (
-		<fieldset className="newContactForm">
-			<legend>{props.legend}</legend>
-			<label>
-				Name
+		<fieldset className="contactForm">
+			<legend className="contactForm__legend">{props.legend}</legend>
+			<label className="contactForm__row">
+				<span>Name</span>
 				<input value={newName} onChange={e => setNewName(e.target.value)} />
 			</label>
-			<label>
-				Job
+			<label className="contactForm__row">
+				<span>Job</span>
 				<input value={newJob} onChange={e => setNewJob(e.target.value)} />
 			</label>
-			<label>
-				Address
+			<label className="contactForm__row">
+				<span>Address</span>
 				<input value={newAddress} onChange={e => setNewAddress(e.target.value)} />
 			</label>
-			<label>
-				Phone Number
+			<label className="contactForm__row">
+				<span>Tel.</span>
 				<input value={newTel} onChange={e => setNewTel(e.target.value)} type="tel" />
 			</label>
-			<label>
-				Email
+			<label className="contactForm__row">
+				<span>Email</span>
 				<input value={newEmail} onChange={e => setNewEmail(e.target.value)} type="email" />
 			</label>
 
