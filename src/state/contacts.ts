@@ -1,22 +1,30 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IContact } from '../MockAPI/store';
+import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { RootState } from '.';
+import { IContact, isContact } from '../MockAPI/store';
+
+export const hydrateContacts = createAsyncThunk(
+	'contact/hydrate',
+	async () => {
+		const response = await fetch('contact').then(res => res.json())
+		if (response instanceof Array && response.every(isContact)) {
+			return response
+		}
+		return []
+	}
+)
+
+export const contactsAdapter = createEntityAdapter<IContact>({
+	selectId: (contact) => contact.id,
+	sortComparer: (a, b) => a.name.localeCompare(b.name),
+})
+
+export const contactsSelectors = contactsAdapter.getSelectors((state: RootState) => state.contacts)
 
 export const contactsSlice = createSlice({
 	name: 'contacts',
-	initialState: [] as IContact[],
-	reducers: {
-		hydrate: (state, action: PayloadAction<IContact[]>) => action.payload,
-		add: (state, action: PayloadAction<IContact>) => state.concat([action.payload]),
-		update: (state, action: PayloadAction<{newContact: IContact, index: number}>) => (
-			{
-				...state,
-				[action.payload.index]: Object.assign(
-					{},
-					state[action.payload.index],
-					action.payload.newContact
-				)
-			}
-		),
-		remove: (state, action: PayloadAction<number>) => state.slice(0, action.payload).concat(state.slice(action.payload + 1))
+	initialState: contactsAdapter.getInitialState(),
+	reducers: {},
+	extraReducers: (builder) => {
+		builder.addCase(hydrateContacts.fulfilled, contactsAdapter.setAll)
 	}
 })
